@@ -1,11 +1,13 @@
-package com.ioinsiders.marvelheroes
+package com.ioinsiders.marvelheroes.ui.activities
 
 
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.provider.CalendarContract
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowInsetsControllerCompat
+import com.ioinsiders.marvelheroes.R
 import com.ioinsiders.marvelheroes.databinding.ActivityMainBinding
 
 
@@ -21,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val wic = WindowInsetsControllerCompat(window, window.decorView)
             wic.isAppearanceLightStatusBars = true
-            window.statusBarColor = Color.parseColor("#FAFAFA")  //Color.WHITE
+            window.statusBarColor = getColor(R.color.marvelWhite)
         }
 
         binding.apply {
