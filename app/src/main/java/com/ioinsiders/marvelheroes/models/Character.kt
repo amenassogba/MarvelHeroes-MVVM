@@ -1,5 +1,6 @@
 package com.ioinsiders.marvelheroes.models
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -10,6 +11,7 @@ data class Character(
     val description: String,
     val modified: String,
     val resourceURI: String,
+    @Embedded val thumbnail: Thumbnail,
     val lastViewedDate: String
 )
 

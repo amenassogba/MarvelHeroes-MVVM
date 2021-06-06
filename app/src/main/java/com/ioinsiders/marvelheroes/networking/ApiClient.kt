@@ -1,6 +1,7 @@
 package com.ioinsiders.marvelheroes.networking
 
 import androidx.annotation.Nullable
+import com.ioinsiders.marvelheroes.models.ApiResponse
 import com.ioinsiders.marvelheroes.models.Character
 import retrofit2.Response
 import retrofit2.http.GET
@@ -15,6 +16,6 @@ interface ApiClient {
         @Nullable @Query("offset") offset: Int,
         @Query("limit") limit: Int
 
-        ): Response<List<Character>>
+        ): Response<ApiResponse<List<Character>>>
 
 }

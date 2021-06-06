@@ -10,7 +10,7 @@ class ApiResponse<T>(
     val attributionText: String,
     val attributionHTML: String,
     val etag: String,
-    var data: T) {
+    var data: ApiResponseData<T> ) {
 
     val isSuccess: Boolean get() = code == 200 || code == 201
 }
