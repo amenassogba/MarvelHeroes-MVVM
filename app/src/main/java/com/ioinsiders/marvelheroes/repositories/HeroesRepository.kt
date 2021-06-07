@@ -18,14 +18,15 @@ class HeroesRepository @Inject constructor(
     private val characterDAO: CharacterDAO
     ) {
 
-    private val timestamp = Date().time
+    private val sortedBy = "-modified"
+    private val timestamp = Date().time.toString()
     private val apiKey = BuildConfig.API_KEY
-    private val hash = HashUtils.md5(timestamp.toString() + BuildConfig.PRIVATE_KEY + apiKey)
+    private val hash = HashUtils.md5(timestamp + BuildConfig.PRIVATE_KEY + apiKey)
 
     suspend fun getCharacters(offset: Int = 0, limit: Int = 20 ): Result<List<Character>> {
 
         return when(val res = apiClient
-            .getCharacters(apiKey, hash, timestamp.toString(), offset, limit)
+            .getCharacters(apiKey, hash, timestamp, offset, limit, sortedBy)
             .unbox()) {
             is Result.Success -> Result.Success(res.data?.data?.results ?: listOf())
             is Result.Error -> Result.Error(res.message!!)
@@ -33,3 +34,5 @@ class HeroesRepository @Inject constructor(
     }
 
 }
+
+//Persist data

@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.19583333333333333" />
+        <entry key="app/src/main/res/drawable/hero_item_background.xml" value="0.1890625" />
         <entry key="app/src/main/res/drawable/ic_logo.xml" value="0.1921875" />
         <entry key="app/src/main/res/drawable/tab_indicator.xml" value="0.1921875" />
         <entry key="app/src/main/res/font/sfpro.xml" value="0.20625" />

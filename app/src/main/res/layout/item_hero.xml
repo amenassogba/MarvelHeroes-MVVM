@@ -1,29 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/tvHeroImage"
-            android:layout_width="160dp"
-            android:layout_height="212dp"
-
-            android:src="@drawable/wolverine"
+        <com.ioinsiders.marvelheroes.helpers.RoundedView
+            android:id="@+id/imgHolder"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:topLeftCornerRadius="16dp"
+            app:bottomLeftCornerRadius="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/tvHeroImage"
+                    android:layout_width="160dp"
+                    android:layout_height="212dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/wolverine"
+                    android:layout_marginStart="-16dp"
+                    />
+        </com.ioinsiders.marvelheroes.helpers.RoundedView>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvHeroName"
             android:layout_marginTop="16dp"
-            android:layout_marginLeft="16dp"
-            app:layout_constraintTop_toTopOf="@id/tvHeroImage"
-            app:layout_constraintStart_toEndOf="@id/tvHeroImage"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toTopOf="@id/imgHolder"
+            app:layout_constraintStart_toEndOf="@id/imgHolder"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintEnd_toEndOf="parent"
             android:textSize="16sp"
@@ -46,7 +52,7 @@
             android:textSize="12sp"
             android:letterSpacing="0.05"
             android:alpha="0.75"
-            android:text="James Howlett"
+            android:text="Comics"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fontFamily="@font/sfpro_medium"/>
@@ -73,8 +79,8 @@
             android:id="@+id/tvMoreInfo"
             android:layout_marginBottom="16dp"
             android:layout_marginStart="16dp"
-            app:layout_constraintBottom_toBottomOf="@id/tvHeroImage"
-            app:layout_constraintStart_toEndOf="@id/tvHeroImage"
+            app:layout_constraintBottom_toBottomOf="@id/imgHolder"
+            app:layout_constraintStart_toEndOf="@id/imgHolder"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintEnd_toEndOf="parent"
             android:textSize="12sp"
@@ -86,13 +92,11 @@
             app:fontFamily="@font/sfpro_bold"/>
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="7dp"
+            android:layout_height="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toBottomOf="@id/tvMoreInfo"
             android:src="@drawable/ic_chevron" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

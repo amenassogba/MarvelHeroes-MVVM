@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ioinsiders.marvelheroes.databinding.ItemHeroBinding
+import com.ioinsiders.marvelheroes.helpers.load
 import com.ioinsiders.marvelheroes.models.Character
+import timber.log.Timber
 
 class HeroesAdapter(
     private val context: Context,
@@ -28,18 +30,24 @@ class HeroesAdapter(
     }
 
     override fun onBindViewHolder(holder: HeroesViewHolder, position: Int) {
-        val character = characters[position]
+        val character =  characterDiffer.currentList[position]
         holder.bind(character)
     }
 
     override fun getItemCount(): Int {
-        return characters.count()
+        return characterDiffer.currentList.size
     }
 
     inner class HeroesViewHolder(private val binding: ItemHeroBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(character: Character) {
-            binding.tvCharacterName.text = character.name
+            binding.tvHeroName.text = character.name
+            binding.tvHeroDescription.text =  if (character.description.isNotEmpty()) character.description
+            else "${character.name} is a fictional character appearing in American comic books published by Marvel ..."
+
+            val imageUrl = character.thumbnail.path + "." + character.thumbnail.extension
+            binding.tvHeroImage.load(imageUrl)
+
         }
     }
 }

@@ -14,7 +14,8 @@ interface ApiClient {
         @Query("hash") hash: String,
         @Query("ts") timestamp: String,
         @Nullable @Query("offset") offset: Int,
-        @Query("limit") limit: Int
+        @Query("limit") limit: Int,
+        @Nullable @Query("orderBy") orderBy: String,
 
         ): Response<ApiResponse<List<Character>>>
 

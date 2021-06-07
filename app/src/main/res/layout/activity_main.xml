@@ -29,7 +29,7 @@
         android:id="@+id/tabLayout"
         android:layout_width="wrap_content"
         android:layout_height="38dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         app:layout_constraintHorizontal_bias="0.0"
@@ -50,8 +50,9 @@
         app:tabPaddingEnd="14dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/heroesRecyclerView"
         app:layout_constraintTop_toBottomOf="@id/tabLayout"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="140dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_width="match_parent"

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import com.ioinsiders.marvelheroes.db.LocalDatabase
+import com.ioinsiders.marvelheroes.models.Constants.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +22,7 @@ class PersistanceModule {
     fun provideLocalDatabase(@ApplicationContext app: Context) =
         Room.databaseBuilder(app,
             LocalDatabase::class.java,
-            ""
+            DATABASE_NAME
         ).build()
 
     @Singleton
