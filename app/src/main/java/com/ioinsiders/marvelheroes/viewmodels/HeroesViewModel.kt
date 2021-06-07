@@ -16,8 +16,11 @@ import javax.inject.Inject
 @HiltViewModel
 class HeroesViewModel @Inject constructor(repository: HeroesRepository):ViewModel()  {
 
+    val tabTitles = listOf("Popular", "A-Z", "Last Viewed")
+
     private val _charactersStateFlow: MutableStateFlow<DataStateEvent<List<Character>>> = MutableStateFlow(DataStateEvent.Initial)
     val charactersStateFlow : StateFlow<DataStateEvent<List<Character>>> = _charactersStateFlow
+
 
     init {
         viewModelScope.launch {
@@ -34,7 +37,8 @@ class HeroesViewModel @Inject constructor(repository: HeroesRepository):ViewMode
         }
     }
 
-    fun loadMoreCharacters() {
+    //We will create a sealed class to hold the current filter here
+    fun loadMoreCharacters(currentFilters: List<Any>) {
 
     }
 

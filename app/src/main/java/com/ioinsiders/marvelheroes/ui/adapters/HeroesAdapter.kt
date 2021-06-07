@@ -12,8 +12,7 @@ import com.ioinsiders.marvelheroes.models.Character
 import timber.log.Timber
 
 class HeroesAdapter(
-    private val context: Context,
-    private val characters: List<Character>
+    private val context: Context
 ): RecyclerView.Adapter<HeroesAdapter.HeroesViewHolder>() {
 
     private val diffCallback = object : DiffUtil.ItemCallback<Character>() {
@@ -41,12 +40,12 @@ class HeroesAdapter(
     inner class HeroesViewHolder(private val binding: ItemHeroBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(character: Character) {
-            binding.tvHeroName.text = character.name
-            binding.tvHeroDescription.text =  if (character.description.isNotEmpty()) character.description
-            else "${character.name} is a fictional character appearing in American comic books published by Marvel ..."
-
-            val imageUrl = character.thumbnail.path + "." + character.thumbnail.extension
-            binding.tvHeroImage.load(imageUrl)
+            binding.apply {
+                tvHeroName.text = character.name
+                tvHeroDescription.text =  if (character.description.isNotEmpty()) character.description
+                else "${character.name} is a fictional character appearing in American comic books published by Marvel ..."
+                tvHeroImage.load(character.thumbnail.url)
+            }
 
         }
     }

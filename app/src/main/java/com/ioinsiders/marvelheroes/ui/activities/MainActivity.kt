@@ -22,6 +22,7 @@ import timber.log.Timber
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+
     private val viewModel: HeroesViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: HeroesAdapter
@@ -47,15 +48,13 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun setupTabLayout() {
-        binding.apply {
-            tabLayout.addTab(tabLayout.newTab().setText("Popular"))
-            tabLayout.addTab(tabLayout.newTab().setText("A-Z"))
-            tabLayout.addTab(tabLayout.newTab().setText("Last Viewed"))
+        binding.tabLayout.apply {
+            viewModel.tabTitles.forEach { addTab(newTab().setText(it)) }
         }
     }
 
     private fun setupRecycleView() {
-        adapter = HeroesAdapter(this, listOf())
+        adapter = HeroesAdapter(this)
         binding.apply {
             heroesRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
             heroesRecyclerView.adapter = adapter
@@ -67,15 +66,9 @@ class MainActivity : AppCompatActivity() {
             viewModel.charactersStateFlow.collect { state ->
                 Timber.i(state.toString())
                 when(state) {
-                    is DataStateEvent.Success -> {
-                        Timber.i("Data size ${state.data.size}")
-                        adapter.submitList(state.data)
-                        //binding.heroesRecyclerView.adapter = mAdapter
-                    }
-
-                    is DataStateEvent.Loading -> Unit // { binding.rvUsers.showProgress() }
+                    is DataStateEvent.Success -> adapter.submitList(state.data)
+                    is DataStateEvent.Loading -> Unit // showProgress
                     is DataStateEvent.Failure -> {
-                        Timber.tag("Proximity Reason").e( state.reason )
                         Toast.makeText(this@MainActivity, state.reason, Toast.LENGTH_SHORT).show()
                     }
                     else -> Unit
