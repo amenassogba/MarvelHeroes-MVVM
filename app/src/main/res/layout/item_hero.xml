@@ -71,6 +71,7 @@
             android:letterSpacing="0.05"
             android:text="Is a fictional character appearing in American comic books published by Marvel ..."
             android:textColor="@color/black"
+            android:ellipsize="end"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:fontFamily="@font/sfpro_regular"/>
