@@ -14,28 +14,41 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class HeroesViewModel @Inject constructor(repository: HeroesRepository):ViewModel()  {
+class HeroesViewModel @Inject constructor(private val repository: HeroesRepository):ViewModel()  {
 
     val tabTitles = listOf("Popular", "A-Z", "Last Viewed")
-
     private val _charactersStateFlow: MutableStateFlow<DataStateEvent<List<Character>>> = MutableStateFlow(DataStateEvent.Initial)
     val charactersStateFlow : StateFlow<DataStateEvent<List<Character>>> = _charactersStateFlow
 
 
     init {
-        viewModelScope.launch {
-            _charactersStateFlow.value = DataStateEvent.Loading
-            when( val result =  repository.getCharacters(0, 20)) {
-                is Result.Success -> {
-                    result.data?.let { _charactersStateFlow.value = DataStateEvent.Success(it) }
-                }
-                is Result.Error -> {
-                    result.message?.let { _charactersStateFlow.value = DataStateEvent.Failure(it) }
-                }
+        loadCharacters()
+    }
 
+    fun loadCharacters() = viewModelScope.launch {
+        _charactersStateFlow.value = DataStateEvent.Loading
+        when( val result = repository.getCharacters(0, 20)) {
+            is Result.Success -> {
+                result.data?.let { _charactersStateFlow.value = DataStateEvent.Success(it) }
             }
+            is Result.Error -> {
+                result.message?.let { _charactersStateFlow.value = DataStateEvent.Failure(it) }
+            }
+
         }
     }
+
+
+    fun loadCharacters(sortedBy: String) {
+
+    }
+
+    fun searchBy(name: String) {
+
+    }
+
+
+
 
     //We will create a sealed class to hold the current filter here
     fun loadMoreCharacters(currentFilters: List<Any>) {
