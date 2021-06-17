@@ -16,8 +16,11 @@ class HeroesAdapter(
 
     private val diffCallback = object : DiffUtil.ItemCallback<Character>() {
         override fun areItemsTheSame(oldItem: Character, newItem: Character) = oldItem.id == newItem.id
-        override fun areContentsTheSame(oldItem: Character, newItem: Character) = oldItem.hashCode() == newItem.hashCode()
+        override fun areContentsTheSame(oldItem: Character, newItem: Character): Boolean {
+            return  oldItem.id == newItem.id
+        }
     }
+
     private val characterDiffer = AsyncListDiffer(this, diffCallback)
     fun submitList(list: List<Character>) = characterDiffer.submitList(list)
 
