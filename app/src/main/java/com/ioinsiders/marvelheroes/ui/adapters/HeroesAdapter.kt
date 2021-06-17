@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ioinsiders.marvelheroes.databinding.ItemHeroBinding
 import com.ioinsiders.marvelheroes.helpers.load
 import com.ioinsiders.marvelheroes.models.Character
-import timber.log.Timber
 
 class HeroesAdapter(
     private val context: Context

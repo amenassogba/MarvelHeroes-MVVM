@@ -47,7 +47,9 @@ class HeroesViewModel @Inject constructor(private val repository: HeroesReposito
 
     }
 
-
+    fun setSortingType(position: Int){
+        Timber.i("Tab selected '${tabTitles[position]}' at position $position ")
+    }
 
 
     //We will create a sealed class to hold the current filter here

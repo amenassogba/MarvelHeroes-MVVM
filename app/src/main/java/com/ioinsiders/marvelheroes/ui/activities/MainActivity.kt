@@ -3,12 +3,14 @@ package com.ioinsiders.marvelheroes.ui.activities
 
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayout
 import com.ioinsiders.marvelheroes.R
 import com.ioinsiders.marvelheroes.databinding.ActivityMainBinding
 import com.ioinsiders.marvelheroes.models.DataStateEvent
@@ -50,6 +52,15 @@ class MainActivity : AppCompatActivity() {
     private fun setupTabLayout() {
         binding.tabLayout.apply {
             viewModel.tabTitles.forEach { addTab(newTab().setText(it)) }
+            addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+                override fun onTabReselected(tab: TabLayout.Tab?) {
+                    viewModel.setSortingType(tab?.position ?: 0)
+                }
+                override fun onTabUnselected(p0: TabLayout.Tab?) { }
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    viewModel.setSortingType(tab?.position ?: 0)
+                }
+            })
         }
     }
 
@@ -64,11 +75,14 @@ class MainActivity : AppCompatActivity() {
     private fun collectStateFlow() {
         lifecycleScope.launch {
             viewModel.charactersStateFlow.collect { state ->
-                Timber.i(state.toString())
                 when(state) {
-                    is DataStateEvent.Success -> adapter.submitList(state.data)
-                    is DataStateEvent.Loading -> Unit // showProgress
+                    is DataStateEvent.Success -> {
+                        adapter.submitList(state.data)
+                        binding.progressBar.visibility = View.GONE
+                    }
+                    is DataStateEvent.Loading -> binding.progressBar.visibility = View.VISIBLE
                     is DataStateEvent.Failure -> {
+                        binding.progressBar.visibility = View.GONE
                         Toast.makeText(this@MainActivity, state.reason, Toast.LENGTH_SHORT).show()
                     }
                     else -> Unit
@@ -76,4 +90,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+
+
+
+
 }
