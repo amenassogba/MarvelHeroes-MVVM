@@ -13,10 +13,12 @@ interface ApiClient {
         @Query("apikey") apiKey: String,
         @Query("hash") hash: String,
         @Query("ts") timestamp: String,
+        @Nullable @Query("name") name: String?,
         @Nullable @Query("offset") offset: Int,
         @Query("limit") limit: Int,
         @Nullable @Query("orderBy") orderBy: String,
 
         ): Response<ApiResponse<List<Character>>>
+
 
 }

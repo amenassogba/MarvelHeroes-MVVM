@@ -5,10 +5,14 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
@@ -22,8 +26,9 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
 
     private val viewModel: HeroesViewModel by viewModels()
@@ -54,7 +59,21 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main, menu)
-        return true
+        val searchMenu = menu?.findItem(R.id.menuSearch)
+
+        val searchView = searchMenu?.actionView as? SearchView
+        val searchIcon = searchView?.findViewById<ImageView>(androidx.appcompat.R.id.search_button)
+        searchIcon?.setImageDrawable(
+            ContextCompat.getDrawable(
+                this,
+                R.drawable.ic_search_custom
+            )
+        )
+
+        searchView?.isSubmitButtonEnabled = true
+        searchView?.setOnQueryTextListener(this)
+
+        return super.onCreateOptionsMenu(menu)
     }
 
     private fun setupTabLayout() {
@@ -82,6 +101,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun collectStateFlow() {
         lifecycleScope.launch {
+            //TODO:: Should not be done as this as the doc stated
+            //Find way to call repeatOnLifecycle
             viewModel.charactersStateFlow.collect { state ->
                 when(state) {
                     is DataStateEvent.Success -> {
@@ -99,8 +120,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        query?.let { viewModel.searchCharacterBy(name = query) }
+        return true
+    }
 
-
+    override fun onQueryTextChange(newText: String?) = false
 
 
 }

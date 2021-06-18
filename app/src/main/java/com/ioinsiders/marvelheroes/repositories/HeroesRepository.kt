@@ -22,23 +22,16 @@ class HeroesRepository @Inject constructor(
     private val apiKey = BuildConfig.API_KEY
     private val hash = HashUtils.md5(timestamp + BuildConfig.PRIVATE_KEY + apiKey)
 
-    suspend fun getCharacters(sortedBy: SortType, offset: Int = 0, limit: Int = 20 ): Result<List<Character>> {
+    suspend fun getCharacters(name: String? = null, sortedBy: SortType, offset: Int = 0, limit: Int = 20 ): Result<List<Character>> {
 
         return when(val res = apiClient
-            .getCharacters(apiKey, hash, timestamp, offset, limit, sortedBy.key)
+            .getCharacters(apiKey, hash, timestamp, name, offset, limit, sortedBy.key)
             .unbox()) {
             is Result.Success -> Result.Success(res.data?.data?.results ?: listOf())
             is Result.Error -> Result.Error(res.message!!)
         }
     }
 
-    suspend fun searchCharactersBy(name: String) {
-
-    }
-
-    suspend fun getLatestViewedCharacters() {
-
-    }
 
 }
 

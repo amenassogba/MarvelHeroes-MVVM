@@ -22,13 +22,13 @@ class HeroesViewModel @Inject constructor(private val repository: HeroesReposito
     val charactersStateFlow : StateFlow<DataStateEvent<List<Character>>> = _charactersStateFlow
 
 
-    init { loadCharacters(currentSortType) }
+    init { loadCharacters(sortedBy = currentSortType) }
 
-    private fun loadCharacters(sortedBy: SortType) = viewModelScope.launch {
+    private fun loadCharacters(name: String? = null, sortedBy: SortType) = viewModelScope.launch {
         _charactersStateFlow.value = DataStateEvent.Loading
         currentSortType = sortedBy
 
-        when( val result = repository.getCharacters(currentSortType, 0, 20)) {
+        when( val result = repository.getCharacters(name, sortedBy = currentSortType, offset = 0, limit = 20)) {
             is Result.Success -> {
                 result.data?.let { _charactersStateFlow.value = DataStateEvent.Success(it) }
             }
@@ -40,13 +40,9 @@ class HeroesViewModel @Inject constructor(private val repository: HeroesReposito
     }
 
 
-    private fun loadLatestViewed() {
+    private fun loadLatestViewed() { }
 
-    }
-
-    fun searchBy(name: String) {
-
-    }
+    fun searchCharacterBy(name: String) = loadCharacters(name, sortedBy = SortType.nameAsc)
 
     fun setSortingType(position: Int){
         when(position) {

@@ -15,4 +15,11 @@
         <item name="android:letterSpacing">0.05</item>
         <item name="android:fontFamily">@font/sfpro_bold</item>
     </style>
+
+    <style name="Theme.MarvelHeroes.Toolbar" parent="Theme.MarvelHeroes">
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorSecondary">@color/black</item>
+        <item name="android:textColor">@color/black</item>
+
+    </style>
 </resources>
